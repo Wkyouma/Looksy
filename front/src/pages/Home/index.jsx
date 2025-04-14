@@ -16,7 +16,7 @@ export default function Home() {
     };
 
     return (
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 p-4">
             {imagem.map((imagem) => (
                 <li key={imagem.id}>
                     <Card imagem={imagem} onDelete={handleDelete} />
