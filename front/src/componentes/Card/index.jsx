@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function Card({ imagem, onDelete }) {
+export default function Card({ imagem, onDelete, isInPasta }) {
     const [showDropdown, setShowDropdown] = useState(false);
     const [pastas, setPastas] = useState([]);
 
@@ -36,6 +36,28 @@ export default function Card({ imagem, onDelete }) {
             }
         }
 
+    const handleRemoveFromPasta = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/pastas/remover-imagem', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    imagemId: imagem.id, 
+                    pastaId: imagem.caminho 
+                }),
+            });
+
+            if (response.ok) {
+                console.log(`Imagem ${imagem.id} removida da pasta`);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Erro ao remover imagem da pasta:', error);
+        }
+    };
+
     return (
         <div className="relative w-60 h-80 group overflow-hidden rounded-lg shadow-md">
             <img
@@ -55,32 +77,39 @@ export default function Card({ imagem, onDelete }) {
                     >
                         Remover
                     </button>
-                    <button className="px-2 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600">
-                        Editar
-                    </button>
-                    <div className="relative">
+                    {isInPasta && (
                         <button
-                            onClick={() => setShowDropdown(!showDropdown)}
-                            className="px-2 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600"
+                            onClick={handleRemoveFromPasta}
+                            className="px-2 py-1 bg-yellow-500 text-white text-xs rounded-md hover:bg-yellow-600"
                         >
-                            Salvar
+                            Remover da Pasta
                         </button>
-                        {showDropdown && (
-                            <div className="absolute top-full left-0 mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg z-50">
-                                <ul>
-                                    {pastas.map((pasta) => (
-                                        <li
-                                            key={pasta.id}
-                                            onClick={() => handleSave(pasta.id)}
-                                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                        >
-                                            {pasta.nome}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
+                    )}
+                    {!isInPasta && (
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowDropdown(!showDropdown)}
+                                className="px-2 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600"
+                            >
+                                Salvar
+                            </button>
+                            {showDropdown && (
+                                <div className="absolute top-full left-0 mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg z-50">
+                                    <ul>
+                                        {pastas.map((pasta) => (
+                                            <li
+                                                key={pasta.id}
+                                                onClick={() => handleSave(pasta.id)}
+                                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                            >
+                                                {pasta.nome}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

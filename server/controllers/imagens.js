@@ -35,3 +35,14 @@ export const deletarImagem = async (req, res) => {
     res.status(204).send();
 }
 
+export const updateImagem = async (req, res) => {
+    const { id } = req.params;
+    const { titulo, descricao, imagem_url } = req.body;
+
+    await db.query(
+        'UPDATE imagens SET titulo = ?, descricao = ?, imagem_url = ? WHERE id = ?',
+        [titulo, descricao, imagem_url, id]
+    );
+
+    res.status(200).json({ message: 'Imagem atualizada com sucesso!' });
+}

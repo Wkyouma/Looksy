@@ -89,11 +89,3 @@ const FormularioImagem = () => {
 
 export default FormularioImagem;
 
-export const listarImagem = async (_, res) => {
-  const [rows] = await db.query('SELECT * FROM imagens');
-  const imagens = rows.map(personagem => ({
-    ...personagem,
-    imagemUrl: personagem.imagem_url // Mapeia imagem_url para imagemUrl
-  }));
-  res.json(imagens);
-};

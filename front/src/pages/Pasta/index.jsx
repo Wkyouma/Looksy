@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Card from "../../componentes/Card";
 
 export default function Pasta() {
-    const { id } = useParams(); 
+    const { id } = useParams();
     const [imagens, setImagens] = useState([]);
 
     useEffect(() => {
@@ -19,8 +19,11 @@ export default function Pasta() {
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {imagens.map((imagem) => (
                     <li key={imagem.id}>
-                        <Card imagem={imagem} />
-                        <h1>{imagem.titulo}</h1>
+                        <Card 
+                            imagem={imagem} 
+                            isInPasta={true} 
+                        />
+                        
                     </li>
                 ))}
             </ul>
