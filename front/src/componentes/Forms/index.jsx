@@ -5,7 +5,8 @@ const FormularioImagem = () => {
   const [imagens, setImagens] = useState({
     titulo: '',
     descricao: '',
-    imagem_url: '' 
+    imagem_url: '' ,
+    caminho:''
   });
   const [sucesso, setSucesso] = useState(false);
 
@@ -33,7 +34,8 @@ const FormularioImagem = () => {
       setImagens({
         titulo: '',
         descricao: '',
-        imagem_url: '' 
+        imagem_url: '',
+        caminho:'' 
       });
     }
   };
@@ -64,6 +66,13 @@ const FormularioImagem = () => {
           type="text"
           name="imagem_url"
           value={imagens.imagem_url}
+          onChange={handleChange}
+        />
+        <Input
+          label="Caminho"
+          type="text"
+          name="caminho"
+          value={imagens.caminho}
           onChange={handleChange}
         />
 

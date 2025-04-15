@@ -16,6 +16,10 @@ export const listarImagensDaPasta = async (req, res) => {
             [id]
         );
         res.json(rows);
+        res.json(rows.map(imagem => ({
+            ...imagem,
+            imagemUrl: imagem.imagem_url 
+        })));
     } catch (error) {
         console.error('Erro ao buscar imagens da pasta:', error);
         res.status(500).json({ error: 'Erro ao buscar imagens da pasta' });

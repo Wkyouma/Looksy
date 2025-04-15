@@ -11,20 +11,21 @@ export const listarImagem = async (_, res) => {
 };
 
 export const AdicionarImagem = async (req, res) => {
-  const { titulo, descricao, imagem_url } = req.body;
+  const { titulo, descricao, imagem_url,caminho } = req.body;
 
   const data_upload = new Date(); 
 
   const [result] = await db.query(
-    'INSERT INTO imagens (titulo, descricao, data_upload, imagem_url) VALUES (?, ?, ?, ?)', 
-    [titulo, descricao, data_upload, imagem_url]
+    'INSERT INTO imagens (titulo, descricao, data_upload, imagem_url, caminho) VALUES (?, ?, ?, ?, ?)', 
+    [titulo, descricao, data_upload, imagem_url, caminho]
   );
   res.status(201).json({
     id: result.insertId, 
     titulo,
     descricao, 
     data_upload, 
-    imagem_url
+    imagem_url,
+    caminho
   });
 };
 
