@@ -5,6 +5,7 @@ export default function Nav(){
             <ul className="flex gap-10">
                 <li><a href="/">Home</a></li>
                 <li><a href="/Add">Adicionar</a></li>
+                <li><a href="/Biblioteca">Biblioteca</a></li>
             </ul>
         </nav>
     )

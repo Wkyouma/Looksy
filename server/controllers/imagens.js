@@ -3,9 +3,9 @@ import { db } from '../db.js';
 
 export const listarImagem = async (_, res) => {
   const [rows] = await db.query('SELECT * FROM imagens');
-  const imagens = rows.map(personagem => ({
-    ...personagem,
-    imagemUrl: personagem.imagem_url // Mapeia imagem_url para imagemUrl
+  const imagens = rows.map(PIN => ({
+    ...PIN,
+    imagemUrl: PIN.imagem_url 
   }));
   res.json(imagens);
 };
@@ -13,7 +13,7 @@ export const listarImagem = async (_, res) => {
 export const AdicionarImagem = async (req, res) => {
   const { titulo, descricao, imagem_url } = req.body;
 
-  const data_upload = new Date(); // Define a data atual automaticamente
+  const data_upload = new Date(); 
 
   const [result] = await db.query(
     'INSERT INTO imagens (titulo, descricao, data_upload, imagem_url) VALUES (?, ?, ?, ?)', 
