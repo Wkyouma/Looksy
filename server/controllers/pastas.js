@@ -3,7 +3,7 @@ import { db } from '../db.js';
 export const listarPastas = async (_, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM pastas');
-        return res.json(rows);  // Garantindo que a resposta seja enviada uma única vez
+        return res.json(rows);  
     } catch (error) {
         console.error('Erro ao listar pastas:', error);
         return res.status(500).json({ error: 'Erro ao listar pastas' });
@@ -21,17 +21,12 @@ export const listarImagensDaPasta = async (req, res) => {
             [id]
         );
 
-        // Verificar se existe resultado antes de enviar resposta
-        if (rows.length === 0) {
-            return res.status(404).json({ error: 'Nenhuma imagem encontrada para esta pasta' });
-        }
-
         const imagens = rows.map(imagem => ({
             ...imagem,
             imagemUrl: imagem.imagem_url
         }));
 
-        return res.json(imagens);  // Garantindo uma única resposta
+        return res.json(imagens); 
     } catch (error) {
         console.error('Erro ao buscar imagens da pasta:', error);
         return res.status(500).json({ error: 'Erro ao buscar imagens da pasta' });
@@ -70,12 +65,8 @@ export const removerPasta = async (req, res) => {
     const { id } = req.body;
     
     try {
-        // First, update images to remove them from the pasta (using 0 instead of NULL)
         await db.query('UPDATE imagens SET caminho = 0 WHERE caminho = ?', [id]);
-        
-        // Then delete the pasta
-        await db.query('DELETE FROM pastas WHERE id = ?', [id]);
-        
+        await db.query('DELETE FROM pastas WHERE id = ?', [id]);    
         return res.status(200).json({ message: 'Pasta removida com sucesso' });
     } catch (error) {
         console.error('Erro ao remover pasta:', error);
