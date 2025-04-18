@@ -22,7 +22,7 @@ export default function Home() {
     return (<>
         <input  className="bg-gradient-to-r from-blue-100 to-blue-200 hover:bg-blue-100 placeholder:text-gray-400 transition-all duration-300  w-7xl ml-4 rounded-xl  h-10 text-center text-blue-500 focus:placeholder:text-cyan-600 border border-transparent focus:outline-none focus:ring-0 focus:border-blue-500   focus:shadow-lg focus:shadow-blue-200"  value={text} onChange={(e)=>setText(e.target.value)} placeholder="Pesquise suas imagens"></input>
         
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 p-4">
+        <ul className="w-screen  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 p-4">
             
             {imgFiltrado.map((imagem) => (
                 <li key={imagem.id}>
