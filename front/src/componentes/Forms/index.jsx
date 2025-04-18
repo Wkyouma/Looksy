@@ -78,7 +78,7 @@ const FormularioImagem = () => {
 
         <button
           type="submit"
-          className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          className="w-full p-2 bg-gradient-to-r from-cyan-500 to-cyan-700 text-white rounded-md hover:bg-cyan-600 hover:shadow-lg hover:shadow-cyan-500/50 transition duration-300"
         >
           Adicionar Imagem
         </button>

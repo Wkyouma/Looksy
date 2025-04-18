@@ -20,7 +20,7 @@ export default function Biblioteca() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ id: Number(id) }) // Changed from pastaId to id
+                    body: JSON.stringify({ id: Number(id) })
                 });
 
                 if (response.ok) {
@@ -37,7 +37,10 @@ export default function Biblioteca() {
 
     return (
         <div className="p-4">
+            <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-bold mb-4">Pastas</h1>
+            <h1 className="text-2xl font-bold mb-4">+</h1>
+            </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {pastas.map((pasta) => (
                     <li key={pasta.id} className="bg-white shadow-md rounded-lg p-4">

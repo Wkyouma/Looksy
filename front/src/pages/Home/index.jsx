@@ -20,7 +20,8 @@ export default function Home() {
     };
 
     return (<>
-        <input className="bg-zinc-300 w-7xl ml-4 rounded-xl text-center h-10 text-black border-none " value={text} onChange={(e)=>setText(e.target.value)} placeholder="Pesquise suas imagens"></input>
+        <input  className="bg-gradient-to-r from-cyan-100 to-cyan-200 hover:bg-cyan-100 placeholder:text-gray-400 transition-all duration-300  w-7xl ml-4 rounded-xl  h-10 text-center text-cyan-500 focus:placeholder:text-cyan-600 border border-transparent focus:outline-none focus:ring-0 focus:border-cyan-500   focus:shadow-lg focus:shadow-cyan-200"  value={text} onChange={(e)=>setText(e.target.value)} placeholder="Pesquise suas imagens"></input>
+        
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 p-4">
             
             {imgFiltrado.map((imagem) => (
