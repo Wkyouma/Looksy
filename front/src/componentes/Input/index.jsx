@@ -14,7 +14,7 @@ const Input = ({ label, type = 'text', value, onChange, name, placeholder, requi
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-0 focus:border-2 focus:border-cyan-500"
+        className="mt-1 p-2 w-full border border-gray-300 rounded-md shadow-sm focus:outline-0 focus:border-2 focus:border-blue-500"
       />
     </div>
   );

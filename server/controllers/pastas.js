@@ -73,3 +73,14 @@ export const removerPasta = async (req, res) => {
         return res.status(500).json({ error: 'Erro ao remover pasta' });
     }
 };
+
+export const criarPasta = async (req, res) => {
+    const { nome } = req.body;
+    try {
+        await db.query('INSERT INTO pastas (nome) VALUES (?)', [nome]);
+        return res.status(201).json({ message: 'Pasta criada com sucesso' });
+    } catch (error) {
+        console.error('Erro ao criar pasta:', error);
+        return res.status(500).json({ error: 'Erro ao criar pasta' });
+    }
+};

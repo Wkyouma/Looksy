@@ -15,7 +15,7 @@ export default function Pasta() {
 
     return (
         <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Imagens da Pasta</h1>
+            <h1 className="text-2xl font-bold mb-4">Imagens da Pasta: </h1>
             
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 p-4">
                         
