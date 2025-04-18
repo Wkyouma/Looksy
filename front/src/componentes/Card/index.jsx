@@ -73,7 +73,7 @@ export default function Card({ imagem, onDelete, isInPasta }) {
                 <div className="flex mt-3 space-x-2">
                     <button
                         onClick={handleDelete}
-                        className="px-2 py-1 bg-red-500 text-white text-xs rounded-md hover:bg-red-600"
+                        className="px-2 py-1 bg-cyan-500 text-white text-xs rounded-md hover:bg-cyan-600"
                     >
                         Remover
                     </button>
@@ -89,7 +89,7 @@ export default function Card({ imagem, onDelete, isInPasta }) {
                         <div className="relative">
                             <button
                                 onClick={() => setShowDropdown(!showDropdown)}
-                                className="px-2 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600"
+                                className="px-2 py-1 bg-white text-cyan-500 text-xs rounded-md hover:bg-gray-200 duration-200 transition-all"
                             >
                                 Salvar
                             </button>
