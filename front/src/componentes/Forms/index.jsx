@@ -44,7 +44,7 @@ const FormularioImagem = () => {
     <div className="max-w-md mx-auto mt-10 p-6 bg-white border border-gray-200 rounded-lg shadow-lg">
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">Adicionar Imagem</h2>
 
-      {sucesso && <div className="text-green-500 mb-4">Imagem adicionada com sucesso!</div>}
+      {sucesso && <div className="text-blue-500 mb-4">Imagem adicionada com sucesso!</div>}
 
       <form onSubmit={handleSubmit}>
         <Input
@@ -68,13 +68,7 @@ const FormularioImagem = () => {
           value={imagens.imagem_url}
           onChange={handleChange}
         />
-        <Input
-          label="Caminho"
-          type="text"
-          name="caminho"
-          value={imagens.caminho}
-          onChange={handleChange}
-        />
+   
 
         <button
           type="submit"

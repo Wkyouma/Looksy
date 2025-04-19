@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import { useDropdown } from "../../context/DropdownContext";
 
-export default function Card({ imagem, onDelete, isInPasta }) {
-    const [showDropdown, setShowDropdown] = useState(false);
+export default function Card({ imagem, onDelete, isInPasta, pastaId, onRemove }) {
     const [pastas, setPastas] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { openDropdownId, toggleDropdown, closeDropdown } = useDropdown();
 
     useEffect(() => {
         fetch('http://localhost:3000/pastas')
@@ -11,6 +12,17 @@ export default function Card({ imagem, onDelete, isInPasta }) {
             .then((data) => setPastas(data))
             .catch((err) => console.error(err));
     }, []);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest('.dropdown-container')) {
+                closeDropdown();
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, [closeDropdown]);
 
     const handleDelete = async () => {
         const confirmDelete = window.confirm(`Deseja remover o personagem "${imagem.nome}"?`);
@@ -32,27 +44,18 @@ export default function Card({ imagem, onDelete, isInPasta }) {
         });
 
         if (response.ok) {
-            console.log(`Imagem ${imagem.id} adicionada à pasta ${pastaId}`);
-            setShowDropdown(false); 
+            closeDropdown();
         }
     };
 
     const handleRemoveFromPasta = async () => {
         try {
-            const response = await fetch('http://localhost:3000/pastas/remover-imagem', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ 
-                    imagemId: imagem.id, 
-                    pastaId: imagem.caminho 
-                }),
+            const response = await fetch(`http://localhost:3000/pastas/${pastaId}/imagens/${imagem.id}`, {
+                method: 'DELETE'
             });
 
             if (response.ok) {
-                console.log(`Imagem ${imagem.id} removida da pasta`);
-                window.location.reload();
+                onRemove?.(imagem.id);
             }
         } catch (error) {
             console.error('Erro ao remover imagem da pasta:', error);
@@ -66,13 +69,15 @@ export default function Card({ imagem, onDelete, isInPasta }) {
                 src={imagem.imagem_url}
                 alt={imagem.nome}
             />
-
-            {/* Overlay that appears on hover */}
             <div className={`absolute inset-0 bg-black/50 flex flex-col justify-center items-center p-2 transition-opacity duration-300 rounded-lg
                 ${isModalOpen ? 'opacity-0' : 'opacity-0 group-hover:opacity-100'}`}
             >
                 <h2 className="text-sm font-bold text-white text-center">{imagem.titulo}</h2>
-                <p className="text-xs text-white text-center mt-1">Descrição: {imagem.descricao}</p>
+                <div className="max-h-20 overflow-y-scroll w-full px-2 mt-1 custom-scroll">
+                    <p className="text-xs text-white text-center break-words">
+                        Descrição: {imagem.descricao}
+                    </p>
+                    </div>
 
                 <div className="flex mt-3 space-x-2">
                     <button
@@ -90,20 +95,27 @@ export default function Card({ imagem, onDelete, isInPasta }) {
                         </button>
                     )}
                     {!isInPasta && (
-                        <div className="relative">
+                        <div className="relative dropdown-container">
                             <button
-                                onClick={() => setShowDropdown(!showDropdown)}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleDropdown(imagem.id);
+                                }}
                                 className="px-2 py-1 bg-white text-blue-500 text-xs rounded-md hover:bg-gray-300 transition-colors"
                             >
                                 Salvar
                             </button>
-                            {showDropdown && (
+                            {openDropdownId === imagem.id && (
                                 <div className="absolute top-full left-0 mt-2 w-40 bg-white border border-gray-300 rounded-md shadow-lg z-[60]">
                                     <ul>
                                         {pastas.map((pasta) => (
                                             <li
                                                 key={pasta.id}
-                                                onClick={() => handleSave(pasta.id)}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleSave(pasta.id);
+                                                    closeDropdown();
+                                                }}
                                                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                             >
                                                 {pasta.nome}
@@ -133,7 +145,7 @@ export default function Card({ imagem, onDelete, isInPasta }) {
                     }}
                 >
                     <div className="bg-white p-6 rounded-lg shadow-xl max-w-4xl w-96 relative" 
-                         onClick={e => e.stopPropagation()}
+                     
                     >
                         <button
                             className=" bg-red-500 text-white w-12 h-8 rounded-t flex items-center justify-center hover:bg-red-600 transition-colors shadow-lg"

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Card from "../../componentes/Card";
+import Card from "../../../componentes/Card";
 
 export default function Pasta() {
     const { id } = useParams();
@@ -18,16 +18,17 @@ export default function Pasta() {
             <h1 className="text-2xl font-bold mb-4">Imagens da Pasta: </h1>
             
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-4 p-4">
-                        
-                        {imagens.map((imagem) => (
-                            <li key={imagem.id}>
-                                <Card 
-                                imagem={imagem} 
-                                isInPasta={true} 
-                            />
-                            </li>
-                        ))}
-                    </ul>
+                {imagens.map((imagem) => (
+                    <li key={imagem.id}>
+                        <Card 
+                            imagem={imagem} 
+                            isInPasta={true}
+                            pastaId={id} 
+                            onRemove={(imagemId) => setImagens(imagens.filter(img => img.id !== imagemId))}
+                        />
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 }

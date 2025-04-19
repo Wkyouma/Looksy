@@ -16,17 +16,12 @@ export const listarImagensDaPasta = async (req, res) => {
         const [rows] = await db.query(
             `SELECT i.* 
              FROM imagens i
-             JOIN pastas p ON i.caminho = p.id
-             WHERE p.id = ?`, 
+             JOIN imagens_pastas ip ON i.id = ip.imagem_id
+             WHERE ip.pasta_id = ?`, 
             [id]
         );
 
-        const imagens = rows.map(imagem => ({
-            ...imagem,
-            imagemUrl: imagem.imagem_url
-        }));
-
-        return res.json(imagens); 
+        return res.json(rows);
     } catch (error) {
         console.error('Erro ao buscar imagens da pasta:', error);
         return res.status(500).json({ error: 'Erro ao buscar imagens da pasta' });
@@ -37,8 +32,8 @@ export const adicionarPasta = async (req, res) => {
     const { imagemId, pastaId } = req.body;
     try {
         await db.query(
-            'UPDATE imagens SET caminho = ? WHERE id = ?',
-            [pastaId, imagemId]
+            'INSERT INTO imagens_pastas (imagem_id, pasta_id) VALUES (?, ?)',
+            [imagemId, pastaId]
         );
         return res.status(200).json({ message: 'Imagem adicionada à pasta com sucesso!' });
     } catch (error) {
@@ -48,10 +43,10 @@ export const adicionarPasta = async (req, res) => {
 };
 
 export const removerDaPasta = async (req, res) => {
-    const { imagemId, pastaId } = req.body;
+    const { pastaId, imagemId } = req.params;
     try {
         await db.query(
-            'UPDATE imagens SET caminho = " " WHERE id = ? AND caminho = ?',
+            'DELETE FROM imagens_pastas WHERE imagem_id = ? AND pasta_id = ?',
             [imagemId, pastaId]
         );
         return res.status(200).json({ message: 'Imagem removida da pasta com sucesso!' });
@@ -65,7 +60,8 @@ export const removerPasta = async (req, res) => {
     const { id } = req.body;
     
     try {
-        await db.query('UPDATE imagens SET caminho = 0 WHERE caminho = ?', [id]);
+
+        await db.query('DELETE FROM imagens_pastas WHERE pasta_id = ?', [id]);
         await db.query('DELETE FROM pastas WHERE id = ?', [id]);    
         return res.status(200).json({ message: 'Pasta removida com sucesso' });
     } catch (error) {
@@ -82,5 +78,30 @@ export const criarPasta = async (req, res) => {
     } catch (error) {
         console.error('Erro ao criar pasta:', error);
         return res.status(500).json({ error: 'Erro ao criar pasta' });
+    }
+};
+
+export const atualizarPasta = async (req, res) => {
+    const { id } = req.params; 
+    const { nome } = req.body;
+
+    try {
+        const [result] = await db.query(
+            'UPDATE pastas SET nome = ? WHERE id = ?', 
+            [nome, id]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Pasta não encontrada' });
+        }
+
+        return res.status(200).json({ 
+            message: 'Pasta atualizada com sucesso',
+            pasta: { id, nome }
+        });
+    }
+    catch (error) {
+        console.error('Erro ao atualizar pasta:', error);
+        return res.status(500).json({ error: 'Erro ao atualizar pasta' });
     }
 };
