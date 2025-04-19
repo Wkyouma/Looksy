@@ -80,12 +80,12 @@ export default function Card({ imagem, onDelete, isInPasta, pastaId, onRemove })
                     </div>
 
                 <div className="flex mt-3 space-x-2">
-                    <button
+                    {isInPasta ==false && (<button
                         onClick={handleDelete}
                         className="px-2 py-1 bg-blue-500 text-white text-xs rounded-md hover:bg-blue-600 transition-colors"
                     >
                         Remover
-                    </button>
+                    </button>)}
                     {isInPasta && (
                         <button
                             onClick={handleRemoveFromPasta}
