@@ -2,13 +2,13 @@
 
 Projeto Looksy — Configuração e execução do ambiente.
 
-## 🛠 Pré-requisitos
+## Pré-requisitos
 
 - Node.js
 - MySQL
 - Git
 
-## 📦 Clonando o repositório
+## Clonando o repositório
 
 ```bash
 git clone https://github.com/Wkyouma/Looksy
@@ -34,7 +34,7 @@ EXIT;
 
 ```
 
-3-Importe o arquivo .sql para popular o banco:
+3-Importe o arquivo .sql para preencher o banco:
 
 ```bash
 
@@ -51,7 +51,7 @@ npm install
 npm run dev
 ```
 
-## 🌐 Inicializando o Back-end
+## Inicializando o Back-end
 
 ```bash
 cd ../server
