@@ -18,7 +18,7 @@ export const AdicionarImagem = async (req, res) => {
   const data_upload = new Date(); 
 
   const [result] = await db.query(
-    'INSERT INTO imagens (titulo, descricao, data_upload, imagem_url) VALUES (?, ?, ?, ?, ?)', 
+    'INSERT INTO imagens (titulo, descricao, data_upload, imagem_url) VALUES (?, ?, ?, ?)', 
     [titulo, descricao, data_upload, imagem_url]
   );
   res.status(201).json({
