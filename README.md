@@ -43,7 +43,7 @@ mysql -u root -p Looksy < caminho/para/looksy.sql
 
 ```
 
-## 💻 Inicializando o Front-end
+## Inicializando o Front-end
 
 ```bash
 cd front
