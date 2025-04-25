@@ -55,7 +55,7 @@ npm run dev
 
 ```bash
 cd ../server
-
+npm install express cors mysql2 nodemon
 ```
 
 Configure as credenciais do banco de dados no back-end:
