@@ -6,7 +6,7 @@ const FormularioImagem = () => {
     titulo: '',
     descricao: '',
     imagem_url: '' ,
-    caminho:''
+    autor:''
   });
   const [sucesso, setSucesso] = useState(false);
 
@@ -35,7 +35,7 @@ const FormularioImagem = () => {
         titulo: '',
         descricao: '',
         imagem_url: '',
-        caminho:'' 
+        autor:'' 
       });
     }
   };
@@ -67,6 +67,13 @@ const FormularioImagem = () => {
           type="text"
           name="imagem_url"
           value={imagens.imagem_url}
+          onChange={handleChange}
+        />
+         <Input
+          label="autor"
+          type="text"
+          name="autor"
+          value={imagens.autor}
           onChange={handleChange}
         />
    

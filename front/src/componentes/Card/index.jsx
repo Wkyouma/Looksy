@@ -173,12 +173,20 @@ export default function Card({ imagem: imagemInicial, onDelete, isInPasta, pasta
 
             {isModalOpen && (
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                    <img 
-                        src={imagem.imagem_url} 
-                        alt={imagem.titulo} 
-                        className="w-full h-auto rounded"
-                    />
-                </Modal>
+                <img 
+                    src={imagem.imagem_url} 
+                    alt={imagem.titulo} 
+                    className="w-full h-auto rounded"
+                />
+                <h1 className="text-blue-600 font-bold">{imagem.titulo}</h1>
+                <p className="mt-2 text-gray-600 text-sm break-words">{imagem.descricao}</p>
+                <p className="mt-2 text-gray-600 text-sm">
+                    Data de upload: {new Date(imagem.data_upload).toLocaleDateString('pt-BR')}
+                </p>
+                <p className="mt-2 text-gray-600 text-sm">
+                    Autor: {imagem.autor || 'Não especificado'}
+                </p>
+            </Modal>
             )}
 
             <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)}>
@@ -197,6 +205,13 @@ export default function Card({ imagem: imagemInicial, onDelete, isInPasta, pasta
                         placeholder="Descrição"
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                         rows="3"
+                    />
+                    <input
+                        type="text"
+                        value={imagemEditada.autor || ''}
+                        onChange={e => setImagemEditada({ ...imagemEditada, autor: e.target.value })}
+                        placeholder="Autor"
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
                     />
                     <div className="flex justify-end gap-2">
                         <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">

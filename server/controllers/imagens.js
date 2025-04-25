@@ -13,20 +13,21 @@ export const listarImagem = async (_, res) => {
 
 export const AdicionarImagem = async (req, res) => {
   try{
-  const { titulo, descricao, imagem_url } = req.body;
+  const { titulo, descricao, imagem_url, autor } = req.body;
 
   const data_upload = new Date(); 
 
   const [result] = await db.query(
-    'INSERT INTO imagens (titulo, descricao, data_upload, imagem_url) VALUES (?, ?, ?, ?)', 
-    [titulo, descricao, data_upload, imagem_url]
+    'INSERT INTO imagens (titulo, descricao, data_upload, imagem_url, autor) VALUES (?, ?, ?, ?,?)', 
+    [titulo, descricao, data_upload, imagem_url, autor]
   );
   res.status(201).json({
     id: result.insertId, 
     titulo,
     descricao, 
     data_upload, 
-    imagem_url
+    imagem_url,
+    autor
   });}
   catch (error) {
     console.error('Erro ao adicionar imagem:', error);
@@ -48,11 +49,11 @@ export const deletarImagem = async (req, res) => {
 export const updateImagem = async (req, res) => {
   try{
     const { id } = req.params;
-    const { titulo, descricao} = req.body;
+    const { titulo, descricao,autor} = req.body;
 
     await db.query(
-        'UPDATE imagens SET titulo = ?, descricao = ? WHERE id = ?',
-        [titulo, descricao, id]
+        'UPDATE imagens SET titulo = ?, descricao = ?, autor = ? WHERE id = ?',
+        [titulo, descricao, autor, id]
     );
 
     res.status(200).json({ message: 'Imagem atualizada com sucesso!' });}
