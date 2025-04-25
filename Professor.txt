@@ -2,6 +2,3 @@ Professor, o vídeo explica o funcionamento do CRUD relacionado à inserção, r
 No entanto, como pretendo incluir esse projeto no meu portfólio pessoal, acabei implementando funcionalidades adicionais, como a criação, remoção, 
 atualização e visualização de pastas, permitindo também inserir e remover imagens dentro delas. 
 Optei por não abordar essas funcionalidades extras no vídeo, pois ele ficaria muito longo e acabaria fugindo da proposta original do trabalho.
-
-
-https://www.youtube.com/watch?v=gxEIsCaa-5g
